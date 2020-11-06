@@ -1,0 +1,39 @@
+{
+  "name": "bayfrontmedia/array-schema",
+  "description": "A simple library used to force a predefined \"schema\" for a given array.",
+  "homepage": "https://github.com/bayfrontmedia/array-schema",
+  "license" : "MIT",
+  "type": "library",
+  "keywords": [
+    "php",
+    "array",
+    "json",
+    "api",
+    "rest"
+  ],
+  "authors": [
+    {
+      "name": "John Robinson",
+      "email": "john@bayfrontmedia.com",
+      "homepage": "https://www.bayfrontmedia.com",
+      "role": "Developer"
+    }
+  ],
+  "funding": [
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/bayfrontmedia"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "bayfrontmedia/php-array-helpers": "^1.0.1",
+    "bayfrontmedia/php-http-request": "^2.0.0",
+    "bayfrontmedia/php-http-response": "^1.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bayfront\\ArraySchema\\": "src/"
+    }
+  }
+}
