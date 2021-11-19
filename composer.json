@@ -19,7 +19,7 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/bayfrontmedia/project_name/issues"
+    "issues": "https://github.com/bayfrontmedia/array-schema/issues"
   },
   "config": {
     "optimize-autoloader": true,
