@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @package array-schema
- * @link https://github.com/bayfrontmedia/array-schema
- * @author John Robinson <john@bayfrontmedia.com>
- * @copyright 2020 Bayfront Media
- */
-
 namespace Bayfront\ArraySchema\Schemas;
 
 use Bayfront\ArrayHelpers\Arr;
@@ -39,10 +32,8 @@ class ResourceCollectionPagination implements SchemaInterface
             throw new InvalidSchemaException('Invalid schema (PaginationLinks): missing required keys');
         }
 
-        $links = [
+        $links = [ // "first" and "last" are always added
             'self' => Request::getUrl(),
-            'first' => NULL,
-            'last' => NULL,
             'prev' => NULL,
             'next' => NULL
         ];
@@ -76,15 +67,15 @@ class ResourceCollectionPagination implements SchemaInterface
 
             if (empty($remaining_query_keys)) { // No remaining query parameters exist on the request
 
-                $links['first'] = Request::getUrl(false);
+                $links['first'] = Request::getUrl();
 
             } else { // Additional query parameters exist on the request
 
-                $links['first'] = Request::getUrl(false) . '?' . http_build_query($remaining_query_keys);
+                $links['first'] = Request::getUrl() . '?' . http_build_query($remaining_query_keys);
 
             }
 
-            $links['last'] = Request::getUrl(false) . '?' . http_build_query(array_merge($remaining_query_keys, [
+            $links['last'] = Request::getUrl() . '?' . http_build_query(array_merge($remaining_query_keys, [
                     'limit' => $limit,
                     'offset' => $max_offset
                 ]));
@@ -99,17 +90,13 @@ class ResourceCollectionPagination implements SchemaInterface
 
                 } else {
 
-                    if ($offset_minus_limit > $max_offset) { // Offset would be higher than the highest possible offset
+                    /*
+                     * Ensure $offset_minus_limit does not exceed $max_offset
+                     */
 
-                        $prev_offset = $max_offset;
+                    $prev_offset = min($offset_minus_limit, $max_offset);
 
-                    } else {
-
-                        $prev_offset = $offset_minus_limit;
-
-                    }
-
-                    $links['prev'] = Request::getUrl(false) . '?' . http_build_query(array_merge($remaining_query_keys, [
+                    $links['prev'] = Request::getUrl() . '?' . http_build_query(array_merge($remaining_query_keys, [
                             'limit' => $limit,
                             'offset' => $prev_offset
                         ]));
@@ -120,7 +107,7 @@ class ResourceCollectionPagination implements SchemaInterface
 
             if ($offset < $max_offset) {
 
-                $links['next'] = Request::getUrl(false) . '?' . http_build_query(array_merge($remaining_query_keys, [
+                $links['next'] = Request::getUrl() . '?' . http_build_query(array_merge($remaining_query_keys, [
                         'limit' => $limit,
                         'offset' => $offset + $limit
                     ]));
@@ -131,9 +118,7 @@ class ResourceCollectionPagination implements SchemaInterface
 
         // Remove base URL from links
 
-        $links = LinksObject::create($links, $config);
-
-        return $links;
+        return LinksObject::create($links, $config);
 
     }
 

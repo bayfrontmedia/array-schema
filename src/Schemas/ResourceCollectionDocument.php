@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @package array-schema
- * @link https://github.com/bayfrontmedia/array-schema
- * @author John Robinson <john@bayfrontmedia.com>
- * @copyright 2020 Bayfront Media
- */
-
 namespace Bayfront\ArraySchema\Schemas;
 
 use Bayfront\ArraySchema\SchemaInterface;
